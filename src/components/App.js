@@ -1,8 +1,7 @@
 import React from 'react';
 import FoodInput from './FoodInput';
-import CostOutput from './CostOutput';
 import Header from './Header';
-import FoodItem from './FoodItem';
+import FoodItems from './FoodItems';
 import Login from './Login';
 import CurrentUser from './CurrentUser';
 import { auth, database } from '../firebase';
@@ -20,7 +19,7 @@ class App extends React.Component {
     };
 
     this.foodItemsRef = database.ref('/foodItems');
-    this.orderResults = this.orderResults.bind(this);
+    this.removeItem = this.removeItem.bind(this);
   }
 
   componentDidMount() {
@@ -33,14 +32,11 @@ class App extends React.Component {
     });
   }
 
-  orderResults(foodItems) {
-    var array = map(foodItems, (foodItem, key) => <FoodItem key={key} {...foodItem} />);
-
-    var sorted = array.sort(function(a, b) {
-      return a.props.yearlyCost - b.props.yearlyCost;
-    });
-
-    return array.reverse();
+  removeItem(key) {
+    console.log('called');
+    const { foodItems } = this.state;
+    var item = foodItems[key];
+    this.foodItemsRef.child(key).remove();
   }
 
   render() {
@@ -55,10 +51,7 @@ class App extends React.Component {
             <div className="app-main">
               <FoodInput addFoodItem={this.addFoodItem} />
               <CurrentUser user={currentUser} />
-              <ul className="outline">
-                <h2>Yearly Cost</h2>
-                <div className="food-item">{this.orderResults(foodItems)}</div>
-              </ul>
+              <FoodItems removeItem={this.removeItem} foodItems={foodItems} />
             </div>
           )}
         </div>
