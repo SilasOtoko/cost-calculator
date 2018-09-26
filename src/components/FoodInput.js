@@ -13,7 +13,7 @@ class FoodInput extends React.Component {
 
   render() {
     return (
-      <div className="outline">
+      <div className="outline food-input">
         <h2>Add Food Item</h2>
         <AddFoodForm addFoodItem={this.props.addFoodItem} currentUser={this.props.currentUser} />
       </div>

@@ -82,7 +82,6 @@ input[type='submit'] {
 .CurrentUser {
   display: flex;
   display: -webkit-flex;
-  width: 400px;
 }
 
 .CurrentUser h3 {
@@ -92,6 +91,7 @@ input[type='submit'] {
 .CurrentUser--photo {
   max-width: 80px;
   margin-right: 20px;
+  flex-shrink: 0;
 }
 
 .food-items {
@@ -104,4 +104,51 @@ input[type='submit'] {
   grid-template-columns: 1fr 1fr 1fr 1fr;
   margin: 10px 0;
   font-size: 1.25em;
+}
+
+@media (max-width: 900px) {
+  .app-main {
+    grid-template-columns: 1fr;
+  }
+  .CurrentUser {
+    display: block;
+  }
+  .food-item {
+    display: flex;
+    display: -webkit-flex;
+    flex-wrap: wrap;
+    -webkit-flex-wrap: wrap;
+    justify-content: space-between;
+    -webkit-justify-content: space-between;
+  }
+  .food-item span:first-of-type {
+    width: 100%;
+    display: block;
+    margin: 10px 0;
+  }
+}
+
+@media (max-width: 580px) {
+  .app-main {
+    display: flex;
+    flex-direction: column;
+  }
+  .food-input {
+    order: 2;
+  }
+  .CurrentUser {
+    order: 1;
+  }
+  .food-items {
+    order: 3;
+  }
+  .food-item {
+    display: block;
+    margin: 20px 0 40px;
+  }
+  .food-item span {
+    width: 100%;
+    display: block;
+    margin: 10px 0;
+  }
 }
