@@ -7,7 +7,6 @@ class AddFoodForm extends React.Component {
   constructor() {
     super();
     this.state = {
-      user: null,
       name: '',
       amount: '',
       yearlyCost: '',
@@ -15,20 +14,18 @@ class AddFoodForm extends React.Component {
       price: ''
     };
 
-    this.foodItemRef = database.ref('/foodItems');
+    this.foodItemRef = database.ref('foodItems');
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleSubmit(event) {
     event.preventDefault();
 
-    const { user } = this.props;
-
     var yearlyCostData = calculateYearlyCost(this.state.amount, this.state.price);
     var yearlyAmountData = calculateYearlyAmount(this.state.amount);
 
     this.foodItemRef.push({
-      user: this.state.user,
+      user: this.props.currentUser.uid,
       name: this.state.name,
       amount: this.state.amount,
       yearlyCost: yearlyCostData,
@@ -38,7 +35,7 @@ class AddFoodForm extends React.Component {
   }
 
   render() {
-    const { name, amount, price, user } = this.state;
+    const { name, amount, price } = this.state;
     return (
       <div className="food-form">
         <form>

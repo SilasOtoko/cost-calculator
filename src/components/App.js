@@ -18,7 +18,7 @@ class App extends React.Component {
       foodItems: null
     };
 
-    this.foodItemsRef = database.ref('/foodItems');
+    this.foodItemsRef = database.ref('foodItems');
     this.removeItem = this.removeItem.bind(this);
   }
 
@@ -26,9 +26,11 @@ class App extends React.Component {
     auth.onAuthStateChanged(currentUser => {
       this.setState({ currentUser });
 
-      this.foodItemsRef.on('value', snapshot => {
-        this.setState({ foodItems: snapshot.val() });
-      });
+      if(currentUser) {
+        this.foodItemsRef.orderByChild('user').equalTo(this.state.currentUser.uid).on('value', snapshot => {
+          this.setState({ foodItems: snapshot.val() });
+        });
+      }
     });
   }
 
@@ -49,7 +51,7 @@ class App extends React.Component {
           <div>{!currentUser && <Login />}</div>
           {currentUser && (
             <div className="app-main">
-              <FoodInput addFoodItem={this.addFoodItem} />
+              <FoodInput addFoodItem={this.addFoodItem} currentUser={currentUser} />
               <CurrentUser user={currentUser} />
               <FoodItems removeItem={this.removeItem} foodItems={foodItems} />
             </div>

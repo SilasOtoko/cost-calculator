@@ -12,8 +12,6 @@ class FoodItem extends React.Component {
 
     const key = this.props.id;
 
-    console.log(key);
-
     return (
       <li className="food-item">
         <span>

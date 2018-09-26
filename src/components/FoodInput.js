@@ -15,7 +15,7 @@ class FoodInput extends React.Component {
     return (
       <div className="outline">
         <h2>Add Food Item</h2>
-        <AddFoodForm addFoodItem={this.props.addFoodItem} />
+        <AddFoodForm addFoodItem={this.props.addFoodItem} currentUser={this.props.currentUser} />
       </div>
     );
   }
